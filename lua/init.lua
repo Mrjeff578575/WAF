@@ -1,4 +1,5 @@
-local waf_path = "/user/local/WAF/"
+local waf_path = "/home/jeff/Downloads/work/conf/WAF/"
+local log_path = "/home/jeff/Downloads/work/conf/WAF/log/"
 local ngxmatch = ngx.re.match
 function getClientIp()
         IP = ngx.var.remote_addr
@@ -8,7 +9,13 @@ function getClientIp()
         return IP
 end
 
+function log(str)
+    local filename = logpath.."test.log"
+    write(filename, str.."\n")
+end
+
 function readfile(path)
+    log(path)
     local fd = io.open(path, 'r')
     if fd == nil then
         return
@@ -18,6 +25,7 @@ function readfile(path)
         table.insert(lines, line)
     end
     fd:close()
+    log(lines)
     return lines
 end
 
