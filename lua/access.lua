@@ -1,4 +1,4 @@
-f whiteip() then
+if whiteip() then
 elseif blockip() then
 elseif whiteurl() then
 else
