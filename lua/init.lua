@@ -37,8 +37,8 @@ function readfile(path)
 end
 
 local forbidden_html = readfile(waf_path.."config/Forbidden.html")
-local ipWhitelist = readfile(waf_path.."config/blocklist")
-local ipBlocklist = readfile(waf_path.."config/whitelist")
+local ipBlocklist= readfile(waf_path.."config/blocklist")
+local ipWhitelist = readfile(waf_path.."config/whitelist")
 
 function whiteurl()
     if wturlrules ~= nil then
