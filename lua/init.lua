@@ -9,8 +9,16 @@ function getClientIp()
         return IP
 end
 
+function write(logfile, msg)
+    local fd = io.open(logfile, "ab")
+    if fd == nil then return end
+    fd:write(msg)
+    fd:flush()
+    fd:close()
+end
+
 function log(str)
-    local filename = logpath.."test.log"
+    local filename = log_path.."test.log"
     write(filename, str.."\n")
 end
 
