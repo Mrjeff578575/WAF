@@ -1,69 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Forbidden</title>
-    <style>
-        .notFoundPage { 
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
-            background: #ffffff;
-        }
+<meta charset="utf-8">
+<title>正在连接服务器...</title>
+<style type="text/css">
+::-moz-selection { background: #fff; text-shadow: none; }
+::selection { background: #fff; text-shadow: none; }
+body { font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;; background: #7fe2b8;; color: #ffffff; font-size: 12pt; }
+#echoerror {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+}
+#errormsg { display: none }
+#blink { display: inline; color: #ec4e4e;; }
+</style>
 
-        .not-found-page-body {
-            position:relative; 
-            width:488px; 
-            height:383px; 
-            margin:77px auto 0; 
-            background: #00BBBB; 
-            background-size: 100% 100%;
-        }
-
-        .bubble-link { 
-            position:absolute; 
-            width:200px; 
-            height:160px; 
-            left:270px; top:0; 
-            display:block; 
-            text-indent:-9999px; 
-            cursor:pointer; 
-        }
-        p { 
-            position:absolute; 
-            left:135px; 
-            top:420px; 
-            display:block; 
-            font-size:14px; 
-            color:#00BBBB; 
-            text-decoration:none; 
-            cursor:pointer;
-        }
-        .text-link{
-            color:#00BBBB;
-        }
-        .text-link:hover { 
-            color:#F76120; 
-            text-decoration:underline; 
-        }
-        .timer { 
-            padding-right:5px; 
-            font-weight:bold; 
-        }
-
-    </style>
 </head>
 <body>
-    <div class="notFoundPage">
-        <div class="not-found-page-body">
-          <a href="javascript:void(0);" class="bubble-link">对不起，您没有权限查看此页面</a>
-          <p><span class="timer">5</span>秒后自动返回<a href="www.baidu.com" class="text-link">XXXX</a>官网</p>
-        </div>
-      </div>;
+<div id="echoerror"></div>
+<div id="errormsg">
+	正在向服务器发起请求....<br>
+	服务器禁止了此次请求<br>
+	正在重试#1....<br>
+	服务器禁止了此次请求 #1<br>
+	正在重试#2....<br>
+	服务器禁止了此次请求 #2<br>
+	正在重试#3....<br>
+	服务器禁止了此次请求 #3<br>
+	失败, 禁止访问
+</div>
+<script type="text/javascript">
+    var charIndex = -1;
+    var stringLength = 0;
+    var inputText;
+    function writeContent(){
+    	inputText = document.getElementById('errormsg').innerHTML;
+        if(charIndex==-1){
+            charIndex = 0;
+            stringLength = inputText.length;
+        }
+        var initString = document.getElementById('echoerror').innerHTML;
+		initString = initString.replace(/<span.*$/gi,"");
+        
+        var theChar = inputText.charAt(charIndex);
+       	var nextFourChars = inputText.substr(charIndex,4);
+		if(nextFourChars=="...."){
+			time = 3000;
+		}else{
+			time = 50;
+		}
+       	if(nextFourChars=='<br>'){
+       		theChar = '<br>';
+       		charIndex+=3;
+       	}
+        initString = initString + theChar + "<span id='blink'>▌</span>";
+        document.getElementById('echoerror').innerHTML = initString;
+        charIndex = charIndex/1 +1;
+        if(charIndex<=stringLength){
+            setTimeout('writeContent(false)',time);
+        }else{
+			document.title = "禁止访问";
+		}
+    }
+	writeContent();
+</script>
 </body>
 </html>

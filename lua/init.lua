@@ -33,7 +33,6 @@ function readfile(path)
         table.insert(lines, line)
     end
     fd:close()
-    log(lines)
     return lines
 end
 
